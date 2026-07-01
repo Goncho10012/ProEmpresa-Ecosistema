@@ -54,7 +54,15 @@ def current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_
     return user
 
 def audit(db: Session, user: dict, accion: str, entidad: str, entidad_id: str = None, detalle: str = ""):
+    """Registra auditoría sin romper flujos iniciados por clientes.
+
+    La columna auditoria.usuario_id referencia a usuarios internos.
+    Cuando la acción viene de App Cliente, el token contiene el id del cliente,
+    por lo que se guarda usuario_id en NULL y se conserva la trazabilidad
+    en entidad, entidad_id y detalle.
+    """
+    usuario_id = user.get("id") if user.get("tipo") != "cliente" else None
     db.execute(text("""
         INSERT INTO auditoria (usuario_id, accion, entidad, entidad_id, detalle)
         VALUES (CAST(:usuario AS uuid), :accion, :entidad, CAST(:entidad_id AS uuid), :detalle)
-    """), {"usuario": user.get("id"), "accion": accion, "entidad": entidad, "entidad_id": entidad_id, "detalle": detalle})
+    """), {"usuario": usuario_id, "accion": accion, "entidad": entidad, "entidad_id": entidad_id, "detalle": detalle})
