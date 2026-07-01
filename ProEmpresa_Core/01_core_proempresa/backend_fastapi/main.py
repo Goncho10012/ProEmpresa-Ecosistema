@@ -33,6 +33,7 @@ app.include_router(personal_router)
 def root():
     return {"name": "Core ProEmpresa", "status": "online"}
 
+
 @app.get("/health")
 def health():
     return {"status": "healthy"}
