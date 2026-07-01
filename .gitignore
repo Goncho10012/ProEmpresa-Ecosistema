@@ -1,0 +1,38 @@
+﻿# Node / React
+**/node_modules/
+**/dist/
+**/.vite/
+**/.env
+**/.env.local
+**/.env.production
+**/.env.development
+
+# Flutter
+**/build/
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/pubspec.lock
+
+# Android
+**/android/.gradle/
+**/android/local.properties
+**/android/key.properties
+**/*.jks
+**/*.keystore
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/.venv/
+**/venv/
+
+# Sistema
+.DS_Store
+Thumbs.db
